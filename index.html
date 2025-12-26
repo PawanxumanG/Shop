@@ -86,8 +86,7 @@
   }
 }
 </script>
-  <link rel="stylesheet" href="/index.css">
-</head>
+  </head>
   <body>
     <!-- Initial Loading Screen -->
     <div id="loader" role="status" aria-label="Loading application">
@@ -104,51 +103,74 @@
 
       /** --- CONSTANTS --- **/
       const SHOP_NAME = "RamDev Shop";
-      const OWNER_WHATSAPP = "919867637326"; // Ensure country code is present without '+'
+      const OWNER_WHATSAPP = "919867637326"; 
       const UPI_ID = "pawanponnam-1@okicici";
       const PLATFORM_FEE = 1;
       const FREE_DELIVERY_THRESHOLD = 100;
       const DELIVERY_CHARGE = 10;
 
       const PRODUCTS = [
-  {
-    id: '1',
-    name: 'Special Kaju Katli',
-    description: 'Premium cashew sweet made with pure ingredients and traditional taste.',
-    price: 450,
-    category: 'Sweets',
-    image: 'kajukatli.jpg'
-  },
-  {
-    id: '2',
-    name: 'Ladoo',
-    description: 'Soft and delicious laddoos prepared with fresh ingredients.',
-    price: 300,
-    category: 'Sweets',
-    image: 'ladoo.jpg'
-  },
-  {
-    id: '3',
-    name: 'Motichoor Ladoo',
-    description: 'Fine motichoor pearls cooked in pure ghee for rich taste.',
-    price: 320,
-    category: 'Sweets',
-    image: 'motichoor.jpg'
-  },
-  {
-    id: '4',
-    name: 'Peda',
-    description: 'Classic milk peda with authentic flavor and smooth texture.',
-    price: 280,
-    category: 'Sweets',
-    image: 'peda.jpg'
-  }
-];
+        {
+          id: '1',
+          name: 'Special Kaju Katli',
+          description: 'Premium cashew fudge made with real silver leaf. Melt-in-your-mouth texture with authentic Indian flavors.',
+          price: 450,
+          category: 'Sweets',
+          image: 'https://images.unsplash.com/photo-1605191421711-da03365ede41?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '2',
+          name: 'Motichoor Laddu',
+          description: 'Traditional fine pearl gram flour balls cooked in pure ghee. A festive favorite for every occasion.',
+          price: 320,
+          category: 'Sweets',
+          image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '3',
+          name: 'Gulab Jamun',
+          description: 'Soft milk-solid balls dipped in rose-scented syrup. Served warm for the best experience.',
+          price: 280,
+          category: 'Sweets',
+          image: 'https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '4',
+          name: 'Chocolate Truffle Cake',
+          description: 'Rich dark chocolate layers with silk ganache finish. Perfect for birthdays and celebrations.',
+          price: 650,
+          category: 'Cakes',
+          image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '5',
+          name: 'Butterscotch Delight',
+          description: 'Vanilla sponge with crunchy butterscotch bits and caramel. A classic flavor loved by all ages.',
+          price: 550,
+          category: 'Cakes',
+          image: 'https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '6',
+          name: 'Rasmalai Cake',
+          description: 'Fusion cake flavored with saffron, cardamom and nuts. Inspired by the traditional Rasmalai sweet.',
+          price: 750,
+          category: 'Cakes',
+          image: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          id: '7',
+          name: 'Gajar Ka Halwa',
+          description: 'Slow-cooked carrot pudding with milk and dry fruits. A winter specialty made with fresh red carrots.',
+          price: 350,
+          category: 'Sweets',
+          image: 'https://images.unsplash.com/photo-1594132473852-7b897184285f?auto=format&fit=crop&q=80&w=800'
+        }
+      ];
 
       /** --- UTILITIES --- **/
       const openWhatsApp = (message) => {
         // Use api.whatsapp.com instead of wa.me for better direct intent handling on Android
-        // And use window.location.href to avoid being blocked as a popup
         const url = `https://api.whatsapp.com/send?phone=${OWNER_WHATSAPP}&text=${encodeURIComponent(message)}`;
         window.location.href = url;
       };
@@ -163,7 +185,6 @@
             </div>
             <div onClick={() => window.location.reload()} className="cursor-pointer" role="button" aria-label="Go to home page">
               <h1 className="text-lg font-black text-gray-900 leading-none tracking-tight">{SHOP_NAME}</h1>
-              <p className="text-[9px] text-orange-600 font-bold uppercase tracking-widest">Premium Confectionery</p>
             </div>
           </div>
           <div className="flex items-center gap-1">
@@ -328,7 +349,7 @@
                 <div className="border-t border-gray-200 pt-3 flex justify-between items-center"><span className="font-black text-gray-900">Grand Total</span><span className="text-xl font-black text-orange-900">₹{grandTotal}</span></div>
               </div>
               <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-6 bg-white border-t rounded-t-[32px] shadow-2xl z-50">
-                <button onClick={onCheckout} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3">PROCEED TO CHECKOUT <i className="fas fa-chevron-right text-xs"></i></button>
+                <button onClick={onCheckout} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3">PROCEED TO ORDER <i className="fas fa-chevron-right text-xs"></i></button>
               </div>
             </>
           )}
@@ -515,6 +536,5 @@
       const root = ReactDOM.createRoot(document.getElementById('root'));
       root.render(<App />);
     </script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>

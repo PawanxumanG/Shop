@@ -16,7 +16,6 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
         </div>
         <div>
           <h1 className="text-xl font-bold text-orange-900 tracking-tight leading-none">{SHOP_NAME}</h1>
-          <p className="text-[10px] text-orange-600 font-medium uppercase tracking-widest mt-0.5">Premium Sweets & Cakes</p>
         </div>
       </div>
       <div className="flex items-center gap-1">
