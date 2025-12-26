@@ -126,13 +126,10 @@
       const DELIVERY_CHARGE = 10;
       
       const INITIAL_PRODUCTS = [
-        { id: '1', name: 'Special Kaju Katli', description: 'Premium cashew fudge made with real silver leaf.', price: 450, category: 'Sweets', image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&q=80&w=400' },
-        { id: '2', name: 'Motichoor Laddu', description: 'Traditional fine pearl gram flour balls cooked in pure ghee.', price: 320, category: 'Sweets', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&q=80&w=400' },
-        { id: '3', name: 'Gulab Jamun', description: 'Soft milk-solid balls dipped in rose-scented syrup.', price: 280, category: 'Sweets', image: 'https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&q=80&w=400' },
-        { id: '4', name: 'Chocolate Truffle Cake', description: 'Rich dark chocolate layers with silk ganache finish.', price: 650, category: 'Cakes', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=400' },
-        { id: '5', name: 'Butterscotch Delight', description: 'Vanilla sponge with crunchy butterscotch bits and caramel.', price: 550, category: 'Cakes', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=400' },
-        { id: '6', name: 'Rasmalai Cake', description: 'Fusion cake flavored with saffron, cardamom and nuts.', price: 750, category: 'Cakes', image: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&q=80&w=400' },
-        { id: '7', name: 'Gajar Ka Halwa', description: 'Slow-cooked carrot pudding with milk and dry fruits.', price: 350, category: 'Sweets', image: 'https://images.unsplash.com/photo-1589113103503-1222149ba1c7?auto=format&fit=crop&q=80&w=400' }
+        { id: '1', name: 'Kaju Katli (250g)', description: 'Premium cashew fudge made with real silver leaf.', price: 50, category: 'Sweets', image: 'kajukatli.jpg' },
+        { id: '2', name: 'Ladoo (250g)', description: 'Soft and delicious laddoos prepared with fresh ingredients.', price: 50, category: 'Sweets', image: 'ladoo.jpg' },
+        { id: '3', name: 'Motichoor Ladoo (250g)', description: 'Traditional fine pearl gram flour balls cooked in pure ghee.', price: 50, category: 'Sweets', image: 'motichoor.jpg' },
+        { id: '4', name: 'Peda (250g)', description: 'Classic milk peda with authentic flavor and smooth texture.', price: 50, category: 'Sweets', image: 'peda.jpg' }
       ];
 
       /** --- UTILITIES --- **/
@@ -208,7 +205,7 @@
                     <option value="Snacks">Snacks</option>
                   </select>
                 </div>
-                <input className="admin-input" placeholder="Image URL" value={form.image} onChange={e => setForm({...form, image: e.target.value})} />
+                <input className="admin-input" placeholder="Image Name (e.g. sweet.jpg)" value={form.image} onChange={e => setForm({...form, image: e.target.value})} />
                 <textarea className="admin-input" placeholder="Description" rows="3" value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
                 
                 <div className="grid grid-cols-2 gap-3 mt-4">
@@ -227,7 +224,7 @@
               {products.map(p => (
                 <div key={p.id} className="bg-white border border-gray-100 p-4 rounded-3xl flex items-center gap-4 shadow-sm">
                   <img src={p.image} className="w-16 h-16 rounded-2xl object-cover bg-gray-100" />
-                  <div className="flex-1">
+                  <div className="flex-1 text-left">
                     <p className="text-sm font-black text-gray-900 leading-tight mb-0.5">{p.name}</p>
                     <p className="text-[10px] font-bold text-orange-600 uppercase mb-1">{p.category} • ₹{p.price}</p>
                   </div>
@@ -237,10 +234,6 @@
                   </div>
                 </div>
               ))}
-            </div>
-            
-            <div className="py-12 text-center">
-              <p className="text-[10px] text-gray-300 font-bold uppercase tracking-widest">End of List</p>
             </div>
           </div>
         );
@@ -263,7 +256,7 @@
             </div>
 
             <div className="space-y-5">
-              <div className="space-y-4">
+              <div className="space-y-4 text-left">
                 <div className="group">
                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Your Name</label>
                   <input 
@@ -318,10 +311,6 @@
                 </div>
               )}
             </div>
-
-            <p className="mt-auto text-center text-[10px] text-gray-300 font-medium pb-4">
-              Your details are stored securely on this device only.
-            </p>
           </div>
         );
       };
@@ -377,7 +366,10 @@
             <p className="text-[10px] text-gray-500 line-clamp-2 mb-3 flex-1 leading-tight">{product.description}</p>
             <div className="mt-auto">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-black text-orange-600">₹{product.price}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm font-black text-orange-600">₹{product.price}</span>
+                  <span className="text-[8px] font-bold text-gray-400">250 GRAMS</span>
+                </div>
                 <button 
                   onClick={(e) => { e.stopPropagation(); onAdd(product); }} 
                   className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center active:bg-orange-600 active:text-white transition-colors"
@@ -406,7 +398,10 @@
           <div className="px-6 -mt-12 relative z-10">
             <div className="inline-block px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">{product.category}</div>
             <h2 className="text-3xl font-black text-gray-900 mb-2 leading-tight">{product.name}</h2>
-            <p className="text-2xl font-black text-orange-600 mb-6">₹{product.price}</p>
+            <div className="flex items-end gap-3 mb-6">
+              <p className="text-2xl font-black text-orange-600">₹{product.price}</p>
+              <p className="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-widest">for 250 Grams</p>
+            </div>
             <div className="space-y-4">
               <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">Description</h3>
               <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>
@@ -422,16 +417,8 @@
 
       const PastOrdersView = ({ orders, onBack }) => {
         const [expandedId, setExpandedId] = useState(null);
-        
-        const formatTime = (dateStr) => {
-          const date = new Date(dateStr);
-          return date.toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
-        };
-
-        const formatDate = (dateStr) => {
-          const date = new Date(dateStr);
-          return date.toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-        };
+        const formatTime = (dateStr) => new Date(dateStr).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+        const formatDate = (dateStr) => new Date(dateStr).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
         return (
           <div role="main" className="p-4 pt-16 min-h-screen bg-[#fffaf0] fade-in text-left">
@@ -443,7 +430,7 @@
               <div className="py-24 text-center">
                 <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-box-open text-3xl text-orange-200"></i></div>
                 <h3 className="text-lg font-bold text-gray-800">No orders yet</h3>
-                <button onClick={onBack} className="mt-8 text-orange-600 font-black uppercase text-[10px] tracking-widest bg-orange-50 px-6 py-3 rounded-full active:scale-95 transition-transform">Go to Menu</button>
+                <button onClick={onBack} className="mt-8 text-orange-600 font-black uppercase text-[10px] tracking-widest bg-orange-50 px-6 py-3 rounded-full">Go to Menu</button>
               </div>
             ) : (
               <div className="space-y-4 pb-24">
@@ -456,7 +443,6 @@
                           <span className="text-[10px] font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded-md flex items-center gap-1">
                             <i className="far fa-clock text-orange-600"></i> {formatTime(order.date)}
                           </span>
-                          <span className="text-[10px] font-medium text-gray-400">{formatDate(order.date)}</span>
                         </div>
                         <div className="flex items-center justify-between pr-4 mt-2">
                           <p className="text-sm font-black text-gray-900">Total: ₹{order.grandTotal}</p>
@@ -465,26 +451,6 @@
                       </div>
                       <i className={`fas fa-chevron-down text-gray-300 transition-transform ${expandedId === order.id ? 'rotate-180' : ''}`}></i>
                     </button>
-                    {expandedId === order.id && (
-                      <div className="px-5 pb-5 border-t border-dashed border-orange-50 pt-4 animate-fadeIn">
-                        <div className="flex justify-between items-center mb-3">
-                          <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Items Detail</h4>
-                        </div>
-                        <div className="space-y-2 mb-4">
-                          {order.items.map((item, idx) => (
-                            <div key={idx} className="flex justify-between text-[11px] items-center">
-                              <span className="text-gray-600 font-medium">{item.name} <span className="text-gray-400 text-[10px]">x{item.quantity}</span></span>
-                              <span className="font-bold text-gray-700">₹{item.price * item.quantity}</span>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="bg-orange-50/50 p-3 rounded-xl border border-orange-100/50">
-                           <p className="text-[9px] font-bold text-orange-800 line-clamp-2 leading-tight">
-                            <i className="fas fa-map-marker-alt mr-1"></i> {order.details.address}
-                           </p>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
@@ -557,19 +523,19 @@
             <h2 className="text-3xl font-black text-gray-900 mb-2">Order Confirmed!</h2>
             <p className="text-sm text-gray-500 mb-8">Summary has been sent to WhatsApp.</p>
             <div className="w-full bg-white rounded-3xl p-6 text-left border border-orange-100 mb-8 shadow-sm">
-              <div className="flex justify-between mb-4">
-                <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Order ID</span>
-                <span className="text-sm font-black">#{order.id.slice(-6)}</span>
+              <div className="flex justify-between mb-4 text-xs font-black uppercase tracking-widest text-orange-600">
+                <span>Order Summary</span>
+                <span>#{order.id.slice(-6)}</span>
               </div>
               <div className="space-y-2 mb-4 border-y py-4">
                 {order.items.map((item, idx) => (
                   <div key={idx} className="flex justify-between text-xs items-center">
-                    <span className="text-gray-700">{item.name} x{item.quantity}</span>
+                    <span className="text-gray-700 font-medium">{item.name} x{item.quantity}</span>
                     <span className="font-bold">₹{item.price * item.quantity}</span>
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-base font-black text-orange-900">
+              <div className="flex justify-between text-base font-black text-orange-900 uppercase tracking-tighter">
                 <span>Grand Total</span>
                 <span>₹{order.grandTotal}</span>
               </div>
@@ -586,13 +552,7 @@
 
       const CheckoutView = ({ grandTotal, profile, onSubmit, onBack }) => {
         const [step, setStep] = useState(1);
-        const [form, setForm] = useState({ 
-          fullName: profile.fullName, 
-          phone: profile.phone, 
-          address: profile.address, 
-          delivery: 'home', 
-          payment: 'cod' 
-        });
+        const [form, setForm] = useState({ fullName: profile.fullName, phone: profile.phone, address: profile.address, payment: 'cod' });
         const isValid = form.fullName.trim() !== '' && form.phone.length >= 10 && form.address.trim().length > 5;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(SHOP_NAME)}&am=${grandTotal}&cu=INR`)}`;
 
@@ -605,41 +565,45 @@
             {step === 1 ? (
               <div className="space-y-5">
                 <div className="space-y-4">
-                  <div className="relative">
+                  <div>
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Confirm Name</label>
-                    <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" placeholder="Full Name" value={form.fullName} onChange={e => setForm({...form, fullName: e.target.value})} />
+                    <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" value={form.fullName} onChange={e => setForm({...form, fullName: e.target.value})} />
                   </div>
-                  <div className="relative">
+                  <div>
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">WhatsApp Number</label>
-                    <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" placeholder="Phone" type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+                    <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
                   </div>
-                  <div className="relative">
+                  <div>
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Delivery Address</label>
-                    <textarea className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none resize-none" placeholder="Address" rows="3" value={form.address} onChange={e => setForm({...form, address: e.target.value})} />
+                    <textarea className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none resize-none" rows="3" value={form.address} onChange={e => setForm({...form, address: e.target.value})} />
                   </div>
-                </div>
-                <div className="bg-orange-50 p-4 rounded-xl flex gap-3">
-                  <i className="fas fa-info-circle text-orange-500 mt-1"></i>
-                  <p className="text-[11px] text-orange-800 font-medium">Please confirm your final delivery address above.</p>
                 </div>
                 <button disabled={!isValid} onClick={() => setStep(2)} className={`w-full py-4 rounded-2xl font-black shadow-lg transition-all active:scale-95 ${isValid ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-gray-100 text-gray-300'}`}>CONTINUE TO PAYMENT</button>
               </div>
             ) : (
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <button onClick={() => setForm({...form, payment: 'qr'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'qr' ? 'border-orange-500 bg-orange-50 shadow-md shadow-orange-50' : 'border-transparent bg-gray-50'}`}>
+                  <button onClick={() => setForm({...form, payment: 'qr'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'qr' ? 'border-orange-500 bg-orange-50' : 'border-transparent bg-gray-50'}`}>
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-orange-600 shadow-sm"><i className="fas fa-qrcode"></i></div>
-                    <div className="text-left"><p className="font-black text-sm text-gray-900">UPI Scan & Pay</p><p className="text-[10px] text-gray-500">Pay ₹{grandTotal}</p></div>
+                    <div className="text-left"><p className="font-black text-sm text-gray-900">UPI Scan & Pay</p><p className="text-[10px] text-gray-500">Auto-fills ₹{grandTotal}</p></div>
                   </button>
-                  <button onClick={() => setForm({...form, payment: 'cod'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'cod' ? 'border-orange-500 bg-orange-50 shadow-md shadow-orange-50' : 'border-transparent bg-gray-50'}`}>
+                  <button onClick={() => setForm({...form, payment: 'cod'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'cod' ? 'border-orange-500 bg-orange-50' : 'border-transparent bg-gray-50'}`}>
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-500 shadow-sm"><i className="fas fa-money-bill-wave"></i></div>
-                    <div className="text-left"><p className="font-black text-sm text-gray-900">Cash on Delivery</p><p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Pay at Doorstep</p></div>
+                    <div className="text-left"><p className="font-black text-sm text-gray-900">Cash on Delivery</p><p className="text-[10px] text-gray-500 uppercase tracking-widest font-black">Pay at Door</p></div>
                   </button>
                 </div>
                 {form.payment === 'qr' && (
-                  <div className="bg-white p-6 rounded-3xl border border-dashed border-orange-200 text-center shadow-sm">
-                    <p className="text-[10px] font-black text-orange-900 mb-4 uppercase tracking-widest">Amount: ₹{grandTotal}</p>
-                    <img src={qrUrl} alt="UPI QR" className="mx-auto w-44 h-44 mb-4 rounded-xl border-4 border-white shadow-lg" />
+                  <div className="space-y-4">
+                    <div className="bg-red-50 p-4 rounded-2xl border border-red-100 text-center animate-pulse">
+                      <p className="text-[11px] font-black text-red-600 uppercase tracking-tight">
+                        Note: send screenshot of the payment other wise order will not be accepted
+                      </p>
+                    </div>
+                    <div className="bg-white p-6 rounded-3xl border border-dashed border-orange-200 text-center shadow-sm">
+                      <p className="text-[10px] font-black text-orange-900 mb-4 uppercase tracking-widest">Amount to Pay: ₹{grandTotal}</p>
+                      <img src={qrUrl} alt="UPI QR" className="mx-auto w-44 h-44 mb-4 rounded-xl border-4 border-white shadow-lg" />
+                      <div className="bg-orange-50 p-2 rounded-lg"><p className="text-[9px] font-black text-orange-800">Scan using GPay, PhonePe or Paytm</p></div>
+                    </div>
                   </div>
                 )}
                 <button onClick={() => onSubmit(form)} className="w-full bg-green-600 text-white py-5 rounded-2xl font-black shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
@@ -657,7 +621,7 @@
         const [selectedProduct, setSelectedProduct] = useState(null);
         const [lastOrder, setLastOrder] = useState(null);
         const [cart, setCart] = useState([]);
-        const [category, setCategory] = useState('All');
+        const [category, setCategory] = useState('Sweets');
         const [pastOrders, setPastOrders] = useState([]);
         const [profile, setProfile] = useState(null);
         const [products, setProducts] = useState(INITIAL_PRODUCTS);
@@ -672,13 +636,10 @@
         useEffect(() => {
           const storedOrders = localStorage.getItem('ramdev_past_orders');
           if (storedOrders) { try { setPastOrders(JSON.parse(storedOrders)); } catch(e) {} }
-          
           const storedProfile = localStorage.getItem('ramdev_profile');
           if (storedProfile) { setProfile(JSON.parse(storedProfile)); setView('catalog'); }
-          
           const storedProducts = localStorage.getItem('ramdev_products');
           if (storedProducts) { setProducts(JSON.parse(storedProducts)); }
-          
           setIsInitializing(false);
         }, []);
 
@@ -744,7 +705,7 @@
           if (view === 'cart') return <CartView cart={cart} subtotal={subtotal} platformFee={platformFee} deliveryCharge={deliveryCharge} grandTotal={grandTotal} onUpdate={(id, d) => setCart(p => p.map(i => i.id === id ? {...i, quantity: Math.max(1, i.quantity + d)} : i))} onRemove={(id) => setCart(p => p.filter(i => i.id !== id))} onBack={() => setView('catalog')} onCheckout={() => setView('checkout')} />;
           if (view === 'checkout') return <CheckoutView grandTotal={grandTotal} profile={profile} onBack={() => setView('cart')} onSubmit={handleFinalOrder} />;
           
-          const filtered = category === 'All' ? products : products.filter(p => p.category === category);
+          const filtered = products.filter(p => p.category === category);
           return (
             <div className="min-h-screen flex flex-col max-w-md mx-auto bg-[#fffaf0] relative">
               <Header 
@@ -756,19 +717,28 @@
               />
               <main role="main" className="flex-1 pt-20 pb-28 px-4 fade-in">
                 <nav className="flex gap-2 mb-6 overflow-x-auto no-scrollbar py-2">
-                  {['All', 'Sweets', 'Cakes', 'Snacks'].map(cat => (
-                    <button key={cat} onClick={() => setCategory(cat)} className={`px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-sm whitespace-nowrap transition-all active:scale-95 ${category === cat ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-white text-orange-900 border border-orange-100'}`}>{cat}</button>
+                  {['Sweets', 'Cakes', 'Snacks'].map(cat => (
+                    <button key={cat} onClick={() => setCategory(cat)} className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-sm whitespace-nowrap transition-all active:scale-95 ${category === cat ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-white text-orange-900 border border-orange-100'}`}>{cat}</button>
                   ))}
                 </nav>
-                <div className="product-grid">
-                  {filtered.map(p => <ProductCard key={p.id} product={p} onAdd={(p) => setCart(prev => {
-                    const exists = prev.find(i => i.id === p.id);
-                    if (exists) return prev.map(i => i.id === p.id ? {...i, quantity: i.quantity + 1} : i);
-                    return [...prev, {...p, quantity: 1}];
-                  })} onClick={(p) => { setSelectedProduct(p); setView('details'); }} />)}
-                </div>
+                
+                {category === 'Sweets' ? (
+                  <div className="product-grid">
+                    {filtered.map(p => <ProductCard key={p.id} product={p} onAdd={(p) => setCart(prev => {
+                      const exists = prev.find(i => i.id === p.id);
+                      if (exists) return prev.map(i => i.id === p.id ? {...i, quantity: i.quantity + 1} : i);
+                      return [...prev, {...p, quantity: 1}];
+                    })} onClick={(p) => { setSelectedProduct(p); setView('details'); }} />)}
+                  </div>
+                ) : (
+                  <div className="py-20 flex flex-col items-center justify-center text-center animate-fadeIn">
+                    <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mb-6 scale-up shadow-inner"><i className="fas fa-magic text-3xl"></i></div>
+                    <h3 className="text-xl font-black text-gray-900 mb-2 uppercase tracking-tighter">Coming Soon</h3>
+                    <p className="text-xs text-gray-500 font-bold max-w-[200px] leading-relaxed">Our kitchen is currently preparing a fresh menu for {category}. Stay tuned!</p>
+                  </div>
+                )}
               </main>
-              {cart.length > 0 && (
+              {cartCount > 0 && (
                 <div className="fixed bottom-6 left-4 right-4 z-40 max-w-[calc(448px-2rem)] mx-auto animate-fadeIn">
                   <button onClick={() => setView('cart')} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-2xl flex justify-between px-6 items-center border-4 border-white/20 active:scale-[0.97] transition-transform">
                     <span className="flex items-center gap-2 text-xs uppercase tracking-widest font-black"><i className="fas fa-shopping-basket"></i> {cartCount} Items</span>
