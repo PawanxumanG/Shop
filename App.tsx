@@ -1,14 +1,14 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { SHOP_NAME, PRODUCTS, OWNER_WHATSAPP } from './constants';
-import { AppView, CartItem, Product, UserDetails } from './types';
-import Header from './components/Header';
-import ProductList from './components/ProductList';
-import CartOverlay from './components/CartOverlay';
-import CheckoutForm from './components/CheckoutForm';
-import SuccessScreen from './components/SuccessScreen';
-import Footer from './components/Footer';
-import AboutModal from './components/AboutModal';
+import { SHOP_NAME, PRODUCTS, OWNER_WHATSAPP } from './constants.ts';
+import { AppView, CartItem, Product, UserDetails } from './types.ts';
+import Header from './components/Header.tsx';
+import ProductList from './components/ProductList.tsx';
+import CartOverlay from './components/CartOverlay.tsx';
+import CheckoutForm from './components/CheckoutForm.tsx';
+import SuccessScreen from './components/SuccessScreen.tsx';
+import Footer from './components/Footer.tsx';
+import AboutModal from './components/AboutModal.tsx';
 
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('catalog');

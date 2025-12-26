@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Product, Category } from '../types';
-import ProductCard from './ProductCard';
+import { Product, Category } from '../types.ts';
+import ProductCard from './ProductCard.tsx';
 
 interface ProductListProps {
   products: Product[];
