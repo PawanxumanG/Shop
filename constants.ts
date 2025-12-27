@@ -12,7 +12,7 @@ export const PRODUCTS: Product[] = [
     description: 'Premium cashew fudge made with real silver leaf.',
     price: 50,
     category: 'Sweets',
-    image: 'images/Sweets/kajukatli.jpg'
+    image: 'kajukatli.jpg'
   },
   {
     id: '2',
@@ -20,7 +20,7 @@ export const PRODUCTS: Product[] = [
     description: 'Soft and delicious laddoos prepared with fresh ingredients.',
     price: 50,
     category: 'Sweets',
-    image: 'images/Sweets/ladoo.jpg'
+    image: 'ladoo.jpg'
   },
   {
     id: '3',
@@ -28,7 +28,7 @@ export const PRODUCTS: Product[] = [
     description: 'Fine motichoor pearls cooked in pure ghee for rich taste.',
     price: 50,
     category: 'Sweets',
-    image: 'images/Sweets/motichoor.jpg'
+    image: 'motichoor.jpg'
   },
   {
     id: '4',
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     description: 'Classic milk peda with authentic flavor and smooth texture.',
     price: 50,
     category: 'Sweets',
-    image: 'images/Sweets/peda.jpg'
+    image: 'peda.jpg'
   },
   {
     id: '5',
