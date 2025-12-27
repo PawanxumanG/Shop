@@ -97,8 +97,8 @@
     <!-- Initial Loading Screen -->
     <div id="loader" role="status" aria-label="Loading application">
       <div class="spinner"></div>
-      <p style="margin-top: 20px; font-weight: 700; color: #9a3412; font-family: 'Playfair Display', serif; font-size: 22px;">RamDev Shop</p>
-      <p style="margin-top: 8px; font-size: 13px; color: #c2410c; opacity: 0.8; font-weight: 500;">Fresh & Delicious...</p>
+      <p id="loader-title" style="margin-top: 20px; font-weight: 700; color: #9a3412; font-family: 'Playfair Display', serif; font-size: 22px;">RamDev Shop</p>
+      <p id="loader-sub" style="margin-top: 8px; font-size: 13px; color: #c2410c; opacity: 0.8; font-weight: 500;">Fresh & Delicious...</p>
     </div>
 
     <div id="root"></div>
@@ -111,6 +111,216 @@
       const SHOP_NAME = "RamDev Shop";
       const OWNER_WHATSAPP = "919867637326"; 
       const UPI_ID = "pawanponnam-1@okicici";
+
+      const LANGUAGES = [
+        { code: 'en', name: 'English', label: 'English' },
+        { code: 'hi', name: 'Hindi', label: 'हिंदी' },
+        { code: 'mr', name: 'Marathi', label: 'मराठी' },
+        { code: 'te', name: 'Telugu', label: 'తెలుగు' }
+      ];
+
+      const TRANSLATIONS = {
+        en: {
+          hello: "Hello There!",
+          enter_details: "Please enter your details once to start ordering delicious treats.",
+          modify_details: "Modify your default delivery details below.",
+          name_label: "Your Name",
+          name_placeholder: "Enter full name",
+          whatsapp_label: "WhatsApp Number",
+          whatsapp_placeholder: "10 digit mobile number",
+          address_label: "Exact Delivery Address",
+          address_placeholder: "Building name, street, area, landmark...",
+          lang_label: "Preferred Language",
+          save_btn: "SAVE & START SHOPPING",
+          update_btn: "UPDATE PROFILE",
+          back_btn: "Back to Menu",
+          hi_user: "Hi",
+          sweets: "Sweets",
+          cakes: "Cakes",
+          snacks: "Snacks",
+          drinks: "Drinks",
+          coming_soon: "Coming Soon",
+          preparing_menu: "Our kitchen is currently preparing a fresh menu for",
+          stay_tuned: "Stay tuned!",
+          items: "Items",
+          add_to_cart: "ADD TO CART",
+          order_now: "ORDER NOW",
+          description: "Description",
+          grand_total: "Grand Total",
+          proceed_order: "PROCEED TO ORDER",
+          your_cart: "Your Cart",
+          cart_empty: "Your cart is empty",
+          explore: "Explore Menu",
+          subtotal: "Subtotal",
+          platform_fee: "Platform Fee",
+          delivery: "Delivery",
+          free: "FREE",
+          order_history: "Order History",
+          no_orders: "No orders yet",
+          checkout: "Checkout",
+          payment_method: "Payment Method",
+          upi_scan: "UPI Scan & Pay",
+          cod: "Cash on Delivery",
+          proceed_wa: "PROCEED TO WHATSAPP",
+          order_confirmed: "Order Confirmed!",
+          finalize_wa: "Please finalize the confirmation on WhatsApp.",
+          submit_rating: "SUBMIT RATING",
+          how_was_exp: "How was your experience?",
+          comments_label: "Your Comments",
+          sent: "SENT",
+          total_amt: "Total Amount"
+        },
+        hi: {
+          hello: "नमस्ते!",
+          enter_details: "स्वादिष्ट व्यंजनों का ऑर्डर शुरू करने के लिए कृपया अपनी जानकारी भरें।",
+          modify_details: "नीचे अपना विवरण बदलें।",
+          name_label: "आपका नाम",
+          name_placeholder: "पूरा नाम दर्ज करें",
+          whatsapp_label: "व्हाट्सएप नंबर",
+          whatsapp_placeholder: "10 अंकों का मोबाइल नंबर",
+          address_label: "सटीक डिलीवरी पता",
+          address_placeholder: "इमारत का नाम, गली, इलाका, लैंडमार्क...",
+          lang_label: "पसंदीदा भाषा",
+          save_btn: "सहेजें और खरीदारी शुरू करें",
+          update_btn: "प्रोफाइल अपडेट करें",
+          back_btn: "मेनू पर वापस जाएं",
+          hi_user: "नमस्ते",
+          sweets: "मिठाई",
+          cakes: "केक",
+          snacks: "स्नैक्स",
+          drinks: "ड्रिंक्स",
+          coming_soon: "जल्द आ रहा है",
+          preparing_menu: "हमारी रसोई वर्तमान में इसके लिए एक नया मेनू तैयार कर रही है:",
+          stay_tuned: "जुड़े रहें!",
+          items: "आइटम",
+          add_to_cart: "कार्ट में जोड़ें",
+          order_now: "अभी ऑर्डर करें",
+          description: "विवरण",
+          grand_total: "कुल योग",
+          proceed_order: "ऑर्डर के लिए आगे बढ़ें",
+          your_cart: "आपकी कार्ट",
+          cart_empty: "आपकी कार्ट खाली है",
+          explore: "मेनू देखें",
+          subtotal: "सबटोटल",
+          platform_fee: "प्लेटफॉर्म शुल्क",
+          delivery: "डिलीवरी",
+          free: "मुफ्त",
+          order_history: "ऑर्डर इतिहास",
+          no_orders: "अभी तक कोई ऑर्डर नहीं",
+          checkout: "चेकआउट",
+          payment_method: "भुगतान विधि",
+          upi_scan: "UPI स्कैन और भुगतान",
+          cod: "कैश ऑन डिलीवरी",
+          proceed_wa: "व्हाट्सएप पर आगे बढ़ें",
+          order_confirmed: "ऑर्डर की पुष्टि हो गई!",
+          finalize_wa: "कृपया व्हाट्सएप पर पुष्टि पूरी करें।",
+          submit_rating: "रेटिंग सबमिट करें",
+          how_was_exp: "आपका अनुभव कैसा रहा?",
+          comments_label: "आपकी टिप्पणी",
+          sent: "भेजा गया",
+          total_amt: "कुल राशि"
+        },
+        mr: {
+          hello: "नमस्कार!",
+          enter_details: "ऑर्डर सुरू करण्यासाठी कृपया तुमची माहिती भरा.",
+          modify_details: "खाली तुमची माहिती बदला.",
+          name_label: "आपले नाव",
+          name_placeholder: "पूर्ण नाव टाका",
+          whatsapp_label: "व्हाट्सॲप नंबर",
+          whatsapp_placeholder: "१० अंकी मोबाईल नंबर",
+          address_label: "डिलिव्हरी पत्ता",
+          address_placeholder: "इमारतीचे नाव, रस्ता, परिसर...",
+          lang_label: "पसंतीची भाषा",
+          save_btn: "जतन करा आणि खरेदी सुरू करा",
+          update_btn: "प्रोफाइल अपडेट करा",
+          back_btn: "मेनूवर परत जा",
+          hi_user: "नमस्कार",
+          sweets: "मिठाई",
+          cakes: "केक",
+          snacks: "स्नॅक्स",
+          drinks: "ड्रिंक्स",
+          coming_soon: "लवकरच येत आहे",
+          preparing_menu: "आमची टीम यासाठी नवीन मेनू तयार करत आहे:",
+          stay_tuned: "प्रतीक्षा करा!",
+          items: "वस्तू",
+          add_to_cart: "कार्टमध्ये जोडा",
+          order_now: "आता ऑर्डर करा",
+          description: "वर्णन",
+          grand_total: "एकूण रक्कम",
+          proceed_order: "ऑर्डरसाठी पुढे जा",
+          your_cart: "आपली कार्ट",
+          cart_empty: "तुमची कार्ट रिकामी आहे",
+          explore: "मेनू पहा",
+          subtotal: "सबटोटल",
+          platform_fee: "प्लॅटफॉर्म शुल्क",
+          delivery: "डिलिव्हरी",
+          free: "मोफत",
+          order_history: "ऑर्डर इतिहास",
+          no_orders: "अजून एकही ऑर्डर नाही",
+          checkout: "चेकआउट",
+          payment_method: "पेमेंट पद्धत",
+          upi_scan: "UPI स्कॅन आणि पे",
+          cod: "कॅश ऑन डिलिव्हरी",
+          proceed_wa: "व्हाट्सॲपवर पुढे जा",
+          order_confirmed: "ऑर्डरची पुष्टी झाली!",
+          finalize_wa: "कृपया व्हाट्सॲपवर अंतिम पुष्टी करा.",
+          submit_rating: "रेटिंग सबमिट करा",
+          how_was_exp: "तुमचा अनुभव कसा होता?",
+          comments_label: "तुमची प्रतिक्रिया",
+          sent: "पाठवले",
+          total_amt: "एकूण रक्कम"
+        },
+        te: {
+          hello: "నమస్కారం!",
+          enter_details: "రుచికరమైన ఆర్డర్‌లను ప్రారంభించడానికి దయచేసి మీ వివరాలను నమోదు చేయండి.",
+          modify_details: "క్రింద మీ వివరాలను సవరించండి.",
+          name_label: "మీ పేరు",
+          name_placeholder: "పూర్తి పేరును నమోదు చేయండి",
+          whatsapp_label: "వాట్సాప్ నంబర్",
+          whatsapp_placeholder: "10 అంకెల మొబైల్ నంబర్",
+          address_label: "డెలివరీ చిరునామా",
+          address_placeholder: "భవనం పేరు, వీధి, ప్రాంతం, ల్యాండ్‌మార్క్...",
+          lang_label: "భాషను ఎంచుకోండి",
+          save_btn: "సేవ్ చేసి షాపింగ్ ప్రారంభించండి",
+          update_btn: "ప్రొఫైల్ అప్‌డేట్ చేయండి",
+          back_btn: "మెనూకి తిరిగి వెళ్ళు",
+          hi_user: "నమస్తే",
+          sweets: "మిఠాయిలు",
+          cakes: "కేకులు",
+          snacks: "స్నాక్స్",
+          drinks: "పానీయాలు",
+          coming_soon: "త్వరలో వస్తుంది",
+          preparing_menu: "మా కిచెన్ ప్రస్తుతం దీని కోసం కొత్త మెనూని సిద్ధం చేస్తోంది:",
+          stay_tuned: "వేచి ఉండండి!",
+          items: "వస్తువులు",
+          add_to_cart: "కార్ట్‌కి జోడించు",
+          order_now: "ఇప్పుడే ఆర్డర్ చేయండి",
+          description: "వివరణ",
+          grand_total: "మొత్తం మొత్తం",
+          proceed_order: "ఆర్డర్‌కు వెళ్లండి",
+          your_cart: "మీ కార్ట్",
+          cart_empty: "మీ కార్ట్ ఖాళీగా ఉంది",
+          explore: "మెనూని చూడండి",
+          subtotal: "ఉపమొత్తం",
+          platform_fee: "ప్లాట్‌ఫారమ్ రుసుము",
+          delivery: "డెలివరీ",
+          free: "ఉచితం",
+          order_history: "ఆర్డర్ చరిత్ర",
+          no_orders: "ఇంకా ఆర్డర్‌లు లేవు",
+          checkout: "చెకౌట్",
+          payment_method: "చెల్లింపు పద్ధతి",
+          upi_scan: "UPI స్కాన్ & పే",
+          cod: "క్యాష్ ఆన్ డెలివరీ",
+          proceed_wa: "వాట్సాప్‌కు వెళ్లండి",
+          order_confirmed: "ఆర్డర్ ధృవీకరించబడింది!",
+          finalize_wa: "దయచేసి వాట్సాప్‌లో ధృవీకరణను పూర్తి చేయండి.",
+          submit_rating: "రేటింగ్‌ను సమర్పించండి",
+          how_was_exp: "మీ అనుభవం ఎలా ఉంది?",
+          comments_label: "మీ వ్యాఖ్యలు",
+          sent: "పంపబడింది",
+          total_amt: "మొత్తం నగదు"
+        }
+      };
       
       const PRODUCTS = [
         { id: '1', name: 'Special Kaju Katli', description: 'Premium cashew sweet made with pure ingredients.', price: 50, weight: '250g', category: 'Sweets', image: 'images/Sweets/kajukatli.jpg' },
@@ -133,8 +343,8 @@
 
       /** --- COMPONENTS --- **/
 
-      const ProfileSetupView = ({ initialData, onSave, isEditing }) => {
-        const [form, setForm] = useState(initialData || { fullName: '', phone: '', address: '' });
+      const ProfileSetupView = ({ initialData, onSave, isEditing, t }) => {
+        const [form, setForm] = useState(initialData || { fullName: '', phone: '', address: '', language: 'en' });
         const isValid = form.fullName.trim() !== '' && form.phone.length >= 10 && form.address.trim().length > 5;
 
         return (
@@ -143,38 +353,53 @@
               <div className="w-20 h-20 bg-orange-100 rounded-[24px] flex items-center justify-center text-orange-600 text-3xl mx-auto mb-6 shadow-inner scale-up">
                 <i className={`fas ${isEditing ? 'fa-user-edit' : 'fa-hand-sparkles'}`}></i>
               </div>
-              <h1 className="text-3xl font-black text-gray-900 mb-2">{isEditing ? 'Update Profile' : 'Hello There!'}</h1>
+              <h1 className="text-3xl font-black text-gray-900 mb-2">{isEditing ? t('update_btn') : t('hello')}</h1>
               <p className="text-gray-500 text-sm px-4">
-                {isEditing ? 'Modify your default delivery details below.' : 'Please enter your details once to start ordering delicious treats.'}
+                {isEditing ? t('modify_details') : t('enter_details')}
               </p>
             </div>
 
             <div className="space-y-5">
               <div className="space-y-4 text-left">
+                <div>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('lang_label')}</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {LANGUAGES.map(lang => (
+                      <button 
+                        key={lang.code}
+                        onClick={() => setForm({...form, language: lang.code})}
+                        className={`py-3 rounded-xl text-xs font-bold border-2 transition-all ${form.language === lang.code ? 'border-orange-500 bg-orange-50 text-orange-900' : 'border-gray-100 bg-gray-50 text-gray-400'}`}
+                      >
+                        {lang.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="group">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Your Name</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('name_label')}</label>
                   <input 
                     className="w-full p-4 bg-gray-50 rounded-2xl border-2 border-transparent focus:border-orange-500 focus:bg-white transition-all text-sm font-medium outline-none" 
-                    placeholder="Enter full name" 
+                    placeholder={t('name_placeholder')} 
                     value={form.fullName} 
                     onChange={e => setForm({...form, fullName: e.target.value})} 
                   />
                 </div>
                 <div className="group">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">WhatsApp Number</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('whatsapp_label')}</label>
                   <input 
                     className="w-full p-4 bg-gray-50 rounded-2xl border-2 border-transparent focus:border-orange-500 focus:bg-white transition-all text-sm font-medium outline-none" 
-                    placeholder="10 digit mobile number" 
+                    placeholder={t('whatsapp_placeholder')} 
                     type="tel" 
                     value={form.phone} 
                     onChange={e => setForm({...form, phone: e.target.value.replace(/\D/g, '')})} 
                   />
                 </div>
                 <div className="group">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Exact Delivery Address</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('address_label')}</label>
                   <textarea 
                     className="w-full p-4 bg-gray-50 rounded-2xl border-2 border-transparent focus:border-orange-500 focus:bg-white transition-all text-sm font-medium outline-none resize-none" 
-                    placeholder="Building name, street, area, landmark..." 
+                    placeholder={t('address_placeholder')} 
                     rows="4" 
                     value={form.address} 
                     onChange={e => setForm({...form, address: e.target.value})} 
@@ -187,7 +412,7 @@
                 onClick={() => onSave(form)}
                 className={`w-full py-5 rounded-2xl font-black shadow-xl transition-all flex items-center justify-center gap-3 ${isValid ? 'bg-orange-600 text-white active:scale-95' : 'bg-gray-100 text-gray-300'}`}
               >
-                {isEditing ? 'UPDATE PROFILE' : 'SAVE & START SHOPPING'}
+                {isEditing ? t('update_btn') : t('save_btn')}
                 <i className="fas fa-arrow-right text-xs"></i>
               </button>
               
@@ -196,7 +421,7 @@
                   onClick={() => onSave(null)} 
                   className="w-full py-4 text-gray-400 font-bold text-xs uppercase tracking-widest"
                 >
-                  Back to Menu
+                  {t('back_btn')}
                 </button>
               )}
             </div>
@@ -204,7 +429,7 @@
         );
       };
 
-      const Header = ({ cartCount, profile, onOpenCart, onOpenOrders, onEditProfile }) => (
+      const Header = ({ cartCount, profile, onOpenCart, onOpenOrders, onEditProfile, t }) => (
         <header role="banner" className="fixed top-0 left-0 right-0 max-w-md mx-auto z-50 bg-white/95 backdrop-blur-sm shadow-sm px-4 py-3 flex items-center justify-between border-b border-orange-50">
           <div className="flex items-center gap-2">
             <button 
@@ -215,7 +440,7 @@
             </button>
             <div className="flex flex-col text-left">
               <h1 className="text-sm font-black text-gray-900 leading-none tracking-tight">{SHOP_NAME}</h1>
-              {profile && <p className="text-[9px] font-bold text-orange-600 mt-0.5">Hi, {profile.fullName.split(' ')[0]}</p>}
+              {profile && <p className="text-[9px] font-bold text-orange-600 mt-0.5">{t('hi_user')}, {profile.fullName.split(' ')[0]}</p>}
             </div>
           </div>
           <div className="flex items-center gap-1">
@@ -242,12 +467,12 @@
         </header>
       );
 
-      const ProductCard = ({ product, onAdd, onClick }) => (
+      const ProductCard = ({ product, onAdd, onClick, t }) => (
         <article className="bg-white rounded-2xl overflow-hidden shadow-sm border border-orange-50 flex flex-col h-full active:scale-[0.98] transition-transform cursor-pointer text-left" onClick={() => onClick(product)}>
           <div className="relative h-36">
             <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             <div className="absolute top-2 right-2">
-              <span className="bg-white/95 backdrop-blur px-2 py-1 rounded-lg text-[9px] font-black text-orange-800 shadow-sm uppercase">{product.category}</span>
+              <span className="bg-white/95 backdrop-blur px-2 py-1 rounded-lg text-[9px] font-black text-orange-800 shadow-sm uppercase">{t(product.category.toLowerCase())}</span>
             </div>
           </div>
           <div className="p-3 flex flex-col flex-1">
@@ -271,7 +496,7 @@
         </article>
       );
 
-      const ProductDetailView = ({ product, onBack, onAdd, cartCount, onOpenCart }) => (
+      const ProductDetailView = ({ product, onBack, onAdd, cartCount, onOpenCart, t }) => (
         <div role="main" className="min-h-screen bg-white fade-in relative pb-28 text-left">
           <div className="fixed top-0 left-0 right-0 z-50 max-w-md mx-auto px-4 py-4 flex justify-between items-center pointer-events-none">
             <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/20 active:scale-90 transition-transform pointer-events-auto shadow-lg"><i className="fas fa-arrow-left"></i></button>
@@ -285,26 +510,26 @@
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/30"></div>
           </div>
           <div className="px-6 -mt-12 relative z-10">
-            <div className="inline-block px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">{product.category}</div>
+            <div className="inline-block px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">{t(product.category.toLowerCase())}</div>
             <h2 className="text-3xl font-black text-gray-900 mb-2 leading-tight">{product.name}</h2>
             <div className="flex items-end gap-3 mb-6">
               <p className="text-2xl font-black text-orange-600">₹{product.price}</p>
               <p className="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-widest">for {product.weight}</p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">Description</h3>
+              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">{t('description')}</h3>
               <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>
             </div>
           </div>
           <div className="fixed bottom-0 left-0 right-0 p-6 bg-white/80 backdrop-blur-xl border-t border-orange-50 max-w-md mx-auto z-40">
             <button onClick={() => { onAdd(product); onBack(); }} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
-              ADD TO CART <i className="fas fa-plus text-xs"></i>
+              {t('add_to_cart')} <i className="fas fa-plus text-xs"></i>
             </button>
           </div>
         </div>
       );
 
-      const PastOrdersView = ({ orders, onBack }) => {
+      const PastOrdersView = ({ orders, onBack, t }) => {
         const [expandedId, setExpandedId] = useState(null);
         const formatTime = (dateStr) => new Date(dateStr).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
 
@@ -312,13 +537,13 @@
           <div role="main" className="p-4 pt-16 min-h-screen bg-[#fffaf0] fade-in text-left">
             <div className="flex items-center gap-4 mb-8">
               <button onClick={onBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm border border-orange-50 active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button>
-              <h2 className="text-2xl font-black text-gray-900">Order History</h2>
+              <h2 className="text-2xl font-black text-gray-900">{t('order_history')}</h2>
             </div>
             {orders.length === 0 ? (
               <div className="py-24 text-center">
                 <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-box-open text-3xl text-orange-200"></i></div>
-                <h3 className="text-lg font-bold text-gray-800">No orders yet</h3>
-                <button onClick={onBack} className="mt-8 text-orange-600 font-black uppercase text-[10px] tracking-widest bg-orange-50 px-6 py-3 rounded-full">Go to Menu</button>
+                <h3 className="text-lg font-bold text-gray-800">{t('no_orders')}</h3>
+                <button onClick={onBack} className="mt-8 text-orange-600 font-black uppercase text-[10px] tracking-widest bg-orange-50 px-6 py-3 rounded-full">{t('back_btn')}</button>
               </div>
             ) : (
               <div className="space-y-4 pb-24">
@@ -333,8 +558,8 @@
                           </span>
                         </div>
                         <div className="flex items-center justify-between pr-4 mt-2">
-                          <p className="text-sm font-black text-gray-900">Total: ₹{order.grandTotal}</p>
-                          <span className="text-[9px] font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-md">SENT</span>
+                          <p className="text-sm font-black text-gray-900">{t('total_amt')}: ₹{order.grandTotal}</p>
+                          <span className="text-[9px] font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-md">{t('sent')}</span>
                         </div>
                       </div>
                       <i className={`fas fa-chevron-down text-gray-300 transition-transform ${expandedId === order.id ? 'rotate-180' : ''}`}></i>
@@ -361,16 +586,17 @@
         );
       };
 
-      const CartView = ({ cart, subtotal, platformFee, deliveryCharge, grandTotal, onUpdate, onRemove, onBack, onCheckout }) => (
+      const CartView = ({ cart, subtotal, platformFee, deliveryCharge, grandTotal, onUpdate, onRemove, onBack, onCheckout, t }) => (
         <div role="main" className="p-4 pt-16 min-h-screen bg-white fade-in text-left">
           <div className="flex items-center gap-4 mb-8">
             <button onClick={onBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button>
-            <h2 className="text-2xl font-black text-gray-900">Your Cart</h2>
+            <h2 className="text-2xl font-black text-gray-900">{t('your_cart')}</h2>
           </div>
           {cart.length === 0 ? (
             <div className="py-24 text-center">
               <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-shopping-basket text-3xl text-orange-200"></i></div>
-              <p className="text-gray-500 font-medium">Your cart is empty</p>
+              <p className="text-gray-500 font-medium mb-6">{t('cart_empty')}</p>
+              <button onClick={onBack} className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold">{t('explore')}</button>
             </div>
           ) : (
             <>
@@ -392,32 +618,42 @@
                 ))}
               </div>
               <div className="bg-gray-50 rounded-3xl p-6 space-y-3 mb-44 border border-gray-100">
-                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">Subtotal</span><span className="font-bold">₹{subtotal}</span></div>
-                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">Platform Fee</span><span className="font-bold">₹{platformFee}</span></div>
-                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">Delivery</span><span>{deliveryCharge === 0 ? 'FREE' : '₹'+deliveryCharge}</span></div>
-                <div className="border-t border-gray-200 pt-3 flex justify-between items-center"><span className="font-black text-gray-900">Grand Total</span><span className="text-xl font-black text-orange-900">₹{grandTotal}</span></div>
+                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">{t('subtotal')}</span><span className="font-bold">₹{subtotal}</span></div>
+                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">{t('platform_fee')}</span><span className="font-bold">₹{platformFee}</span></div>
+                <div className="flex justify-between items-center text-sm"><span className="text-gray-500">{t('delivery')}</span><span className="font-bold">{deliveryCharge === 0 ? t('free') : '₹'+deliveryCharge}</span></div>
+                <div className="border-t border-gray-200 pt-3 flex justify-between items-center"><span className="font-black text-gray-900">{t('grand_total')}</span><span className="text-xl font-black text-orange-900">₹{grandTotal}</span></div>
               </div>
               <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-6 bg-white border-t rounded-t-[32px] shadow-2xl z-50">
-                <button onClick={onCheckout} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">PROCEED TO ORDER <i className="fas fa-chevron-right text-xs"></i></button>
+                <button onClick={onCheckout} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform uppercase text-sm tracking-widest">{t('proceed_order')} <i className="fas fa-chevron-right text-xs"></i></button>
               </div>
             </>
           )}
         </div>
       );
 
-      const SuccessView = ({ order, onBack }) => {
+      const SuccessView = ({ order, onBack, t }) => {
         const [rating, setRating] = useState(5);
-        const [feedback, setFeedback] = useState("Excellent service and delicious treats! Highly recommended.");
+        const [feedback, setFeedback] = useState("");
 
-        const defaultFeedbacks = {
-          1: "Disappointed with the experience. Needs major improvement.",
-          2: "The experience was average. Hope for better next time.",
-          3: "Good experience, but there's room for improvement.",
-          4: "Very good taste and quality. Satisfied with the order.",
-          5: "Excellent service and delicious treats! Highly recommended."
-        };
+        useEffect(() => {
+          const defaultFeedbacks = {
+            1: "Disappointed with the experience. Needs major improvement.",
+            2: "The experience was average. Hope for better next time.",
+            3: "Good experience, but there's room for improvement.",
+            4: "Very good taste and quality. Satisfied with the order.",
+            5: "Excellent service and delicious treats! Highly recommended."
+          };
+          setFeedback(defaultFeedbacks[5]);
+        }, []);
 
         const handleRatingClick = (r) => {
+          const defaultFeedbacks = {
+            1: "Disappointed with the experience. Needs major improvement.",
+            2: "The experience was average. Hope for better next time.",
+            3: "Good experience, but there's room for improvement.",
+            4: "Very good taste and quality. Satisfied with the order.",
+            5: "Excellent service and delicious treats! Highly recommended."
+          };
           setRating(r);
           setFeedback(defaultFeedbacks[r]);
         };
@@ -448,26 +684,26 @@
         return (
           <div className="p-4 pt-16 min-h-screen bg-[#fffaf0] fade-in text-center flex flex-col items-center">
             <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white mb-4 scale-up shadow-xl border-4 border-white"><i className="fas fa-check text-2xl"></i></div>
-            <h2 className="text-2xl font-black text-gray-900 mb-1 leading-tight">Order Confirmed!</h2>
-            <p className="text-[11px] text-gray-500 mb-6 font-medium">Please finalize the confirmation on WhatsApp if not already done.</p>
+            <h2 className="text-2xl font-black text-gray-900 mb-1 leading-tight">{t('order_confirmed')}</h2>
+            <p className="text-[11px] text-gray-500 mb-6 font-medium">{t('finalize_wa')}</p>
             
             <div className="w-full bg-white rounded-3xl p-5 text-left border border-orange-100 mb-6 shadow-sm">
               <div className="flex justify-between mb-3 text-[10px] font-black uppercase tracking-widest text-orange-600">
-                <span>Quick Summary</span>
+                <span>Summary</span>
                 <span>#{order.id.slice(-6)}</span>
               </div>
               <div className="flex justify-between text-base font-black text-orange-900 uppercase tracking-tighter">
-                <span>Total Amount</span>
+                <span>{t('total_amt')}</span>
                 <span>₹{order.grandTotal}</span>
               </div>
               <button onClick={handleResendOrder} className="mt-3 w-full py-2 bg-orange-50 text-orange-600 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2">
-                <i className="fab fa-whatsapp"></i> RESEND ORDER DETAILS
+                <i className="fab fa-whatsapp"></i> RESEND ON WHATSAPP
               </button>
             </div>
 
             {/* Rating Section */}
             <div className="w-full bg-white rounded-3xl p-6 text-left border border-orange-100 mb-20 shadow-sm fade-in">
-              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">How was your experience?</h3>
+              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">{t('how_was_exp')}</h3>
               
               <div className="flex justify-center gap-3 mb-6">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -482,34 +718,33 @@
               </div>
 
               <div className="relative">
-                <label className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-1 ml-1 block">Your Comments</label>
+                <label className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-1 ml-1 block">{t('comments_label')}</label>
                 <textarea 
                   className="w-full p-4 bg-orange-50/30 rounded-2xl border-2 border-transparent focus:border-orange-200 focus:bg-white transition-all text-xs font-medium outline-none resize-none leading-relaxed text-gray-700" 
                   rows="3"
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
-                  placeholder="Tell us what you liked..."
                 />
               </div>
 
               <button 
                 onClick={handleSendFeedback}
-                className="w-full mt-4 bg-gray-900 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform text-sm uppercase tracking-widest"
+                className="w-full mt-4 bg-gray-900 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform text-xs uppercase tracking-widest"
               >
-                <i className="fas fa-paper-plane text-xs"></i> SUBMIT RATING
+                {t('submit_rating')}
               </button>
             </div>
 
             <div className="fixed bottom-0 left-0 right-0 p-6 bg-white/80 backdrop-blur-xl border-t border-orange-50 max-w-md mx-auto z-40">
               <button onClick={onBack} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform uppercase text-sm tracking-widest">
-                BACK TO MENU
+                {t('back_btn')}
               </button>
             </div>
           </div>
         );
       };
 
-      const CheckoutView = ({ grandTotal, profile, onSubmit, onBack }) => {
+      const CheckoutView = ({ grandTotal, profile, onSubmit, onBack, t }) => {
         const [step, setStep] = useState(1);
         const [form, setForm] = useState({ fullName: profile.fullName, phone: profile.phone, address: profile.address, payment: 'cod' });
         const isValid = form.fullName.trim() !== '' && form.phone.length >= 10 && form.address.trim().length > 5;
@@ -519,44 +754,42 @@
           <div role="main" className="p-4 pt-16 min-h-screen bg-white fade-in text-left">
             <div className="flex items-center gap-4 mb-10">
               <button onClick={step === 1 ? onBack : () => setStep(1)} className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button>
-              <h2 className="text-2xl font-black text-gray-900">Checkout</h2>
+              <h2 className="text-2xl font-black text-gray-900">{t('checkout')}</h2>
             </div>
             {step === 1 ? (
               <div className="space-y-5">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Confirm Name</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('name_label')}</label>
                     <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" value={form.fullName} onChange={e => setForm({...form, fullName: e.target.value})} />
                   </div>
                   <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">WhatsApp Number</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('whatsapp_label')}</label>
                     <input className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none" type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
                   </div>
                   <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">Delivery Address</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 ml-1 block">{t('address_label')}</label>
                     <textarea className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-orange-500 text-sm font-medium outline-none resize-none" rows="3" value={form.address} onChange={e => setForm({...form, address: e.target.value})} />
                   </div>
                 </div>
-                <button disabled={!isValid} onClick={() => setStep(2)} className={`w-full py-4 rounded-2xl font-black shadow-lg transition-all active:scale-95 ${isValid ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-gray-100 text-gray-300'}`}>CONTINUE TO PAYMENT</button>
+                <button disabled={!isValid} onClick={() => setStep(2)} className={`w-full py-4 rounded-2xl font-black shadow-lg transition-all active:scale-95 ${isValid ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-gray-100 text-gray-300'}`}>{t('proceed_order')}</button>
               </div>
             ) : (
               <div className="space-y-6">
                 <div className="space-y-3">
                   <button onClick={() => setForm({...form, payment: 'qr'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'qr' ? 'border-orange-500 bg-orange-50 shadow-md shadow-orange-50' : 'border-transparent bg-gray-50'}`}>
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-orange-600 shadow-sm"><i className="fas fa-qrcode"></i></div>
-                    <div className="text-left"><p className="font-black text-sm text-gray-900">UPI Scan & Pay</p><p className="text-[10px] text-gray-500">Auto-fills ₹{grandTotal}</p></div>
+                    <div className="text-left"><p className="font-black text-sm text-gray-900">{t('upi_scan')}</p><p className="text-[10px] text-gray-500">Auto-fills ₹{grandTotal}</p></div>
                   </button>
                   <button onClick={() => setForm({...form, payment: 'cod'})} className={`w-full p-5 rounded-2xl border-2 flex items-center gap-4 transition-all active:scale-95 ${form.payment === 'cod' ? 'border-orange-500 bg-orange-50 shadow-md shadow-orange-50' : 'border-transparent bg-gray-50'}`}>
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-500 shadow-sm"><i className="fas fa-money-bill-wave"></i></div>
-                    <div className="text-left"><p className="font-black text-sm text-gray-900">Cash on Delivery</p><p className="text-[10px] text-gray-500 uppercase tracking-widest font-black">Pay at Door</p></div>
+                    <div className="text-left"><p className="font-black text-sm text-gray-900">{t('cod')}</p><p className="text-[10px] text-gray-500 uppercase tracking-widest font-black">Pay at Door</p></div>
                   </button>
                 </div>
                 {form.payment === 'qr' && (
                   <div className="space-y-4">
-                    <div className="bg-red-50 p-4 rounded-2xl border border-red-100 text-center animate-pulse">
-                      <p className="text-[11px] font-black text-red-600 uppercase tracking-tight">
-                        Note: send screenshot of the payment other wise order will not be accepted
-                      </p>
+                    <div className="bg-red-50 p-4 rounded-2xl border border-red-100 text-center">
+                      <p className="text-[11px] font-black text-red-600 uppercase tracking-tight">Note: send screenshot of the payment otherwise order will not be accepted</p>
                     </div>
                     <div className="bg-white p-6 rounded-3xl border border-dashed border-orange-200 text-center shadow-sm">
                       <p className="text-[10px] font-black text-orange-900 mb-4 uppercase tracking-widest">Amount to Pay: ₹{grandTotal}</p>
@@ -565,7 +798,7 @@
                   </div>
                 )}
                 <button onClick={() => onSubmit(form)} className="w-full bg-green-600 text-white py-5 rounded-2xl font-black shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
-                  <i className="fab fa-whatsapp text-xl"></i> PROCEED TO WHATSAPP
+                  <i className="fab fa-whatsapp text-xl"></i> {t('proceed_wa')}
                 </button>
               </div>
             )}
@@ -584,6 +817,11 @@
         const [profile, setProfile] = useState(null);
         const [isInitializing, setIsInitializing] = useState(true);
 
+        const currentLang = useMemo(() => profile?.language || 'en', [profile]);
+        const t = useCallback((key) => {
+          return TRANSLATIONS[currentLang][key] || key;
+        }, [currentLang]);
+
         const subtotal = useMemo(() => cart.reduce((s, i) => s + i.price * i.quantity, 0), [cart]);
         const platformFee = PLATFORM_FEE;
         const deliveryCharge = useMemo(() => (cart.length > 0 && subtotal < FREE_DELIVERY_THRESHOLD) ? DELIVERY_CHARGE : 0, [subtotal, cart.length]);
@@ -594,7 +832,11 @@
           const storedOrders = localStorage.getItem('ramdev_past_orders');
           if (storedOrders) { try { setPastOrders(JSON.parse(storedOrders)); } catch(e) {} }
           const storedProfile = localStorage.getItem('ramdev_profile');
-          if (storedProfile) { setProfile(JSON.parse(storedProfile)); setView('catalog'); }
+          if (storedProfile) { 
+            const p = JSON.parse(storedProfile);
+            setProfile(p); 
+            setView('catalog'); 
+          }
           setIsInitializing(false);
         }, []);
 
@@ -606,7 +848,7 @@
         };
 
         const handleFinalOrder = (details) => {
-          const updatedProfile = { fullName: details.fullName, phone: details.phone, address: details.address };
+          const updatedProfile = { ...profile, fullName: details.fullName, phone: details.phone, address: details.address };
           setProfile(updatedProfile);
           localStorage.setItem('ramdev_profile', JSON.stringify(updatedProfile));
 
@@ -642,17 +884,17 @@
 
         const renderView = () => {
           if (isInitializing) return null;
-          if (view === 'onboarding') return <ProfileSetupView onSave={saveProfile} />;
-          if (view === 'edit_profile') return <ProfileSetupView initialData={profile} onSave={saveProfile} isEditing={true} />;
-          if (view === 'success' && lastOrder) return <SuccessView order={lastOrder} onBack={() => { setView('catalog'); setLastOrder(null); }} />;
+          if (view === 'onboarding') return <ProfileSetupView onSave={saveProfile} t={t} />;
+          if (view === 'edit_profile') return <ProfileSetupView initialData={profile} onSave={saveProfile} isEditing={true} t={t} />;
+          if (view === 'success' && lastOrder) return <SuccessView order={lastOrder} onBack={() => { setView('catalog'); setLastOrder(null); }} t={t} />;
           if (view === 'details' && selectedProduct) return <ProductDetailView product={selectedProduct} onBack={() => setView('catalog')} onAdd={(p) => setCart(prev => {
             const exists = prev.find(i => i.id === p.id);
             if (exists) return prev.map(i => i.id === p.id ? {...i, quantity: i.quantity + 1} : i);
             return [...prev, {...p, quantity: 1}];
-          })} cartCount={cartCount} onOpenCart={() => setView('cart')} />;
-          if (view === 'orders') return <PastOrdersView orders={pastOrders} onBack={() => setView('catalog')} />;
-          if (view === 'cart') return <CartView cart={cart} subtotal={subtotal} platformFee={platformFee} deliveryCharge={deliveryCharge} grandTotal={grandTotal} onUpdate={(id, d) => setCart(p => p.map(i => i.id === id ? {...i, quantity: Math.max(1, i.quantity + d)} : i))} onRemove={(id) => setCart(p => p.filter(i => i.id !== id))} onBack={() => setView('catalog')} onCheckout={() => setView('checkout')} />;
-          if (view === 'checkout') return <CheckoutView grandTotal={grandTotal} profile={profile} onBack={() => setView('cart')} onSubmit={handleFinalOrder} />;
+          })} cartCount={cartCount} onOpenCart={() => setView('cart')} t={t} />;
+          if (view === 'orders') return <PastOrdersView orders={pastOrders} onBack={() => setView('catalog')} t={t} />;
+          if (view === 'cart') return <CartView cart={cart} subtotal={subtotal} platformFee={platformFee} deliveryCharge={deliveryCharge} grandTotal={grandTotal} onUpdate={(id, d) => setCart(p => p.map(i => i.id === id ? {...i, quantity: Math.max(1, i.quantity + d)} : i))} onRemove={(id) => setCart(p => p.filter(i => i.id !== id))} onBack={() => setView('catalog')} onCheckout={() => setView('checkout')} t={t} />;
+          if (view === 'checkout') return <CheckoutView grandTotal={grandTotal} profile={profile} onBack={() => setView('cart')} onSubmit={handleFinalOrder} t={t} />;
           
           const filtered = PRODUCTS.filter(p => p.category === category);
           return (
@@ -663,11 +905,12 @@
                 onOpenCart={() => setView('cart')} 
                 onOpenOrders={() => setView('orders')} 
                 onEditProfile={() => setView('edit_profile')}
+                t={t}
               />
               <main role="main" className="flex-1 pt-20 pb-28 px-4 fade-in">
                 <nav className="flex gap-2 mb-6 overflow-x-auto no-scrollbar py-2">
                   {['Sweets', 'Cakes', 'Snacks', 'Drinks'].map(cat => (
-                    <button key={cat} onClick={() => setCategory(cat)} className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-sm whitespace-nowrap transition-all active:scale-95 ${category === cat ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-white text-orange-900 border border-orange-100'}`}>{cat}</button>
+                    <button key={cat} onClick={() => setCategory(cat)} className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-sm whitespace-nowrap transition-all active:scale-95 ${category === cat ? 'bg-orange-600 text-white shadow-orange-100' : 'bg-white text-orange-900 border border-orange-100'}`}>{t(cat.toLowerCase())}</button>
                   ))}
                 </nav>
                 
@@ -677,20 +920,20 @@
                       const exists = prev.find(i => i.id === p.id);
                       if (exists) return prev.map(i => i.id === p.id ? {...i, quantity: i.quantity + 1} : i);
                       return [...prev, {...p, quantity: 1}];
-                    })} onClick={(p) => { setSelectedProduct(p); setView('details'); }} />)}
+                    })} onClick={(p) => { setSelectedProduct(p); setView('details'); }} t={t} />)}
                   </div>
                 ) : (
                   <div className="py-20 flex flex-col items-center justify-center text-center animate-fadeIn">
                     <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mb-6 scale-up shadow-inner"><i className="fas fa-magic text-3xl"></i></div>
-                    <h3 className="text-xl font-black text-gray-900 mb-2 uppercase tracking-tighter">Coming Soon</h3>
-                    <p className="text-xs text-gray-500 font-bold max-w-[200px] leading-relaxed">Our kitchen is currently preparing a fresh menu for {category}. Stay tuned!</p>
+                    <h3 className="text-xl font-black text-gray-900 mb-2 uppercase tracking-tighter">{t('coming_soon')}</h3>
+                    <p className="text-xs text-gray-500 font-bold max-w-[200px] leading-relaxed">{t('preparing_menu')} {t(category.toLowerCase())}. {t('stay_tuned')}</p>
                   </div>
                 )}
               </main>
               {cartCount > 0 && (
                 <div className="fixed bottom-6 left-4 right-4 z-40 max-w-[calc(448px-2rem)] mx-auto animate-fadeIn">
                   <button onClick={() => setView('cart')} className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-2xl flex justify-between px-6 items-center border-4 border-white/20 active:scale-[0.97] transition-transform">
-                    <span className="flex items-center gap-2 text-xs uppercase tracking-widest font-black"><i className="fas fa-shopping-basket"></i> {cartCount} Items</span>
+                    <span className="flex items-center gap-2 text-xs uppercase tracking-widest font-black"><i className="fas fa-shopping-basket"></i> {cartCount} {t('items')}</span>
                     <span className="text-sm font-black tracking-tight">₹{grandTotal} <i className="fas fa-chevron-right ml-1 text-[10px]"></i></span>
                   </button>
                 </div>
