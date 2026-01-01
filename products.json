@@ -87,7 +87,7 @@
         "author": "RamDev Specials"
       },
       "note": {
-        "show": true,
+        "show": false,
         "title": "Note from Owner",
         "text": "\"At RamDev Shop, purity is our religion. Every batch of sweets is prepared using 100% pure desi ghee and handpicked ingredients, just the way it was done generations ago. We invite you to taste the tradition.\"",
         "ownerName": "Pawan Ponnam",
