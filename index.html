@@ -421,12 +421,27 @@
           return item ? item.quantity : 0;
         };
 
-        const cartTotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-        const deliveryFee = (deliveryMethod === 'home') 
-          ? (cartTotal < appData.settings.minOrder ? appData.settings.deliveryFee : 0) 
-          : 0;
-        const totalWithFees = cartTotal + appData.settings.platformFee + deliveryFee;
-        const canCheckout = cartTotal >= appData.settings.minOrder;
+        // CART TOTAL (products only)
+const cartTotal = cart.reduce(
+  (sum, item) => sum + item.price * item.quantity,
+  0
+);
+
+// DELIVERY FEE
+const deliveryFee =
+  deliveryMethod === 'home'
+    ? appData.settings.deliveryFee
+    : 0;
+
+// GRAND TOTAL
+const totalWithFees =
+  cartTotal + appData.settings.platformFee + deliveryFee;
+
+// ✅ CHECKOUT LOGIC (FIXED)
+const canCheckout =
+  deliveryMethod === 'pickup'
+    ? cartTotal > 0
+    : cartTotal >= appData.settings.minOrder;
 
         const handleFinalOrder = () => {
           if (!profile) return;
