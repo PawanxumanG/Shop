@@ -66,7 +66,7 @@ const generateInvoicePDF = (order: any, shopName: string) => {
   doc.save(`${shopName}_Invoice_${order.id.slice(-4)}.pdf`);
 };
 
-/** --- ADMIN COMPONENTS --- **/
+/** --- ADMIN DASHBOARD --- **/
 const AdminDashboard = ({ appData, onUpdateAppData, onBack }: any) => {
   const [activeTab, setActiveTab] = useState('products');
   const [editingProduct, setEditingProduct] = useState<any>(null);
@@ -150,24 +150,20 @@ const AdminDashboard = ({ appData, onUpdateAppData, onBack }: any) => {
           <div className="space-y-4">
             <h3 className="text-xs font-black text-primary uppercase tracking-widest">Brand & Colors</h3>
             <div>
-              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">App Display Name</label>
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">App Name</label>
               <input type="text" className="w-full p-4 bg-gray-50 rounded-2xl outline-none font-bold text-gray-800" value={appData.settings.appName} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, appName: e.target.value}})} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Primary Color</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl border-none cursor-pointer" value={appData.settings.theme.primary} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, primary: e.target.value}}})} /></div>
-              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Secondary Color</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl border-none cursor-pointer" value={appData.settings.theme.secondary} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, secondary: e.target.value}}})} /></div>
+              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Primary Color</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl cursor-pointer" value={appData.settings.theme.primary} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, primary: e.target.value}}})} /></div>
+              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Secondary Color</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl cursor-pointer" value={appData.settings.theme.secondary} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, secondary: e.target.value}}})} /></div>
             </div>
-            <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">App Background</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl border-none cursor-pointer" value={appData.settings.theme.background} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, background: e.target.value}}})} /></div>
+            <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">App Background</label><input type="color" className="w-full h-12 p-1 bg-gray-50 rounded-xl cursor-pointer" value={appData.settings.theme.background} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, theme: {...appData.settings.theme, background: e.target.value}}})} /></div>
           </div>
 
           <div className="space-y-4 pt-6 border-t">
             <h3 className="text-xs font-black text-primary uppercase tracking-widest">Shop Config</h3>
             <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Owner WhatsApp</label><input type="text" className="w-full p-4 bg-gray-50 rounded-2xl outline-none font-bold text-gray-800" value={appData.settings.ownerWhatsApp} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, ownerWhatsApp: e.target.value}})} /></div>
             <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">UPI ID</label><input type="text" className="w-full p-4 bg-gray-50 rounded-2xl outline-none font-bold text-gray-800" value={appData.settings.upiId} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, upiId: e.target.value}})} /></div>
-            <div className="grid grid-cols-2 gap-4">
-              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Min Order (₹)</label><input type="number" className="w-full p-4 bg-gray-50 rounded-2xl outline-none font-bold" value={appData.settings.minOrder} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, minOrder: parseInt(e.target.value)||0}})} /></div>
-              <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-2">Platform Fee (₹)</label><input type="number" className="w-full p-4 bg-gray-50 rounded-2xl outline-none font-bold" value={appData.settings.platformFee} onChange={e => onUpdateAppData({...appData, settings: {...appData.settings, platformFee: parseInt(e.target.value)||0}})} /></div>
-            </div>
           </div>
         </div>
       )}
@@ -241,17 +237,12 @@ const App = () => {
   const [deliveryMethod, setDeliveryMethod] = useState<'home' | 'pickup'>('home');
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi'>('cod');
 
-  // Initialization logic
   useEffect(() => {
     const init = async () => {
       try {
-        const savedData = localStorage.getItem('ramdev_v4_data');
-        if (savedData) {
-          const parsed = JSON.parse(savedData);
-          setAppData(parsed);
-        }
+        const savedData = localStorage.getItem('ramdev_v5_data');
+        if (savedData) setAppData(JSON.parse(savedData));
 
-        // Try to fetch remote products.json
         const res = await fetch('./products.json?v=' + Date.now());
         if (res.ok) {
           const remote = await res.json();
@@ -265,12 +256,9 @@ const App = () => {
       } catch (err) {
         console.error("Init Error:", err);
       } finally {
-        const storedProfile = localStorage.getItem('ramdev_profile_v4');
-        if (storedProfile) { 
-          setProfile(JSON.parse(storedProfile)); 
-          setView('catalog'); 
-        }
-        const storedOrders = localStorage.getItem('ramdev_orders_v4');
+        const storedProfile = localStorage.getItem('ramdev_profile_v5');
+        if (storedProfile) { setProfile(JSON.parse(storedProfile)); setView('catalog'); }
+        const storedOrders = localStorage.getItem('ramdev_orders_v5');
         if (storedOrders) setOrders(JSON.parse(storedOrders));
         setIsLoading(false);
       }
@@ -278,14 +266,10 @@ const App = () => {
     init();
   }, []);
 
-  // Save to LocalStorage
   useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem('ramdev_v4_data', JSON.stringify(appData));
-    }
+    if (!isLoading) localStorage.setItem('ramdev_v5_data', JSON.stringify(appData));
   }, [appData, isLoading]);
 
-  // Dynamic Theme Management
   useEffect(() => {
     if (appData.settings?.theme) {
       const root = document.documentElement;
@@ -293,20 +277,15 @@ const App = () => {
       root.style.setProperty('--secondary', appData.settings.theme.secondary);
       root.style.setProperty('--app-bg', appData.settings.theme.background);
       document.body.style.backgroundColor = appData.settings.theme.background;
-
       const loaderText = document.getElementById('loader-text');
       if (loaderText) loaderText.textContent = appData.settings.appName;
     }
   }, [appData.settings.theme, appData.settings.appName]);
 
-  // Handle Loader Hiding
   useEffect(() => {
     if (!isLoading) {
       const loader = document.getElementById('loader');
-      if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 400);
-      }
+      if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 400); }
     }
   }, [isLoading]);
 
@@ -327,22 +306,10 @@ const App = () => {
   const totalWithFees = cartTotal + appData.settings.platformFee + deliveryFee;
 
   const handleOrderConfirm = () => {
-    const newOrder = { 
-      id: Date.now().toString(), 
-      date: new Date().toISOString(), 
-      cart: [...cart], 
-      cartTotal, 
-      platformFee: appData.settings.platformFee, 
-      deliveryFee, 
-      totalWithFees, 
-      profile, 
-      deliveryMethod, 
-      paymentMethod 
-    };
+    const newOrder = { id: Date.now().toString(), date: new Date().toISOString(), cart: [...cart], cartTotal, platformFee: appData.settings.platformFee, deliveryFee, totalWithFees, profile, deliveryMethod, paymentMethod };
     const updatedOrders = [newOrder, ...orders];
     setOrders(updatedOrders);
-    localStorage.setItem('ramdev_orders_v4', JSON.stringify(updatedOrders));
-    
+    localStorage.setItem('ramdev_orders_v5', JSON.stringify(updatedOrders));
     const msg = `🛍️ *${appData.settings.appName.toUpperCase()} ORDER*\n👤 *Customer:* ${profile.fullName}\n📞 *Phone:* ${profile.phone}\n📍 *Address:* ${profile.address}\n\n🍰 *Items:*\n${cart.map(i => `• ${i.name} (x${i.quantity}) - ₹${i.price * i.quantity}`).join('\n')}\n\n🔥 *Grand Total: ₹${totalWithFees}*`;
     window.location.href = `https://api.whatsapp.com/send?phone=${appData.settings.ownerWhatsApp}&text=${encodeURIComponent(msg)}`;
     setCart([]); setView('catalog');
@@ -362,57 +329,28 @@ const App = () => {
         <div><label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block ml-1">ADDRESS</label><textarea className="w-full p-4 bg-gray-50 rounded-2xl border outline-none font-bold" placeholder="Full Delivery Address" id="reg-address" rows={3} /></div>
         <button onClick={() => {
           const p = { fullName: (document.getElementById('reg-name') as HTMLInputElement).value, phone: (document.getElementById('reg-phone') as HTMLInputElement).value, address: (document.getElementById('reg-address') as HTMLTextAreaElement).value };
-          if (p.fullName && p.phone && p.address) { setProfile(p); localStorage.setItem('ramdev_profile_v4', JSON.stringify(p)); setView('catalog'); }
-        }} className="w-full py-5 bg-primary text-white rounded-2xl font-black shadow-xl active:scale-95 transition-all tracking-widest text-sm uppercase">Enter Shop</button>
+          if (p.fullName && p.phone && p.address) { setProfile(p); localStorage.setItem('ramdev_profile_v5', JSON.stringify(p)); setView('catalog'); }
+        }} className="w-full py-5 bg-primary text-white rounded-2xl font-black shadow-xl tracking-widest text-sm uppercase">Enter Shop</button>
       </div>
       <button onClick={() => setView('admin_login')} className="mt-16 text-gray-300 text-[10px] font-black uppercase tracking-widest border-b border-gray-100 pb-1">STAFF ACCESS</button>
-    </div>
-  );
-
-  if (view === 'orders') return (
-    <div className="min-h-screen p-4 pt-16 text-left fade-in">
-       <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => setView('catalog')} className="w-10 h-10 bg-white rounded-full flex items-center justify-center border shadow-sm active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button>
-        <h2 className="text-2xl font-black uppercase tracking-tighter">ORDER HISTORY</h2>
-      </div>
-      {orders.length === 0 ? <div className="text-center py-20 text-gray-400 font-bold uppercase tracking-widest">No previous orders</div> : (
-        <div className="space-y-4 pb-20">
-          {orders.map(o => (
-            <div key={o.id} className="bg-white p-6 rounded-[32px] shadow-soft border border-orange-50">
-              <div className="flex justify-between items-start mb-4">
-                <div><p className="text-[10px] font-black text-gray-300 uppercase leading-none mb-1">ID: RD-{o.id.slice(-6).toUpperCase()}</p><p className="text-xs font-bold text-gray-500 leading-none">{new Date(o.date).toLocaleDateString()}</p></div>
-                <span className="text-primary font-black text-sm">₹{o.totalWithFees}</span>
-              </div>
-              <div className="space-y-2 mb-6 border-l-2 border-orange-100 pl-4 ml-1">
-                {o.cart.map((i: any) => <p key={i.id} className="text-[11px] text-gray-600 font-bold leading-tight">{i.name} (x{i.quantity})</p>)}
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => { setCart(o.cart); setView('cart'); }} className="flex-1 py-3 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg active:scale-95 transition-all">Re-order</button>
-                <button onClick={() => generateInvoicePDF(o, appData.settings.appName)} className="flex-1 py-3 bg-white text-primary border border-orange-200 rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 transition-all">Invoice PDF</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 
   if (view === 'catalog') return (
     <div className="min-h-screen">
       <header className="fixed top-0 left-0 right-0 max-w-md mx-auto z-50 bg-white/95 backdrop-blur-sm shadow-sm px-4 py-3 flex items-center justify-between border-b border-orange-50">
-        <div className="flex items-center gap-3" onClick={() => setView('onboarding')}>
+        <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg"><i className="fas fa-user text-sm"></i></div>
-          <div className="text-left leading-none"><h1 className="text-base font-black text-gray-900 leading-none tracking-tighter uppercase">{appData.settings.appName}</h1><p className="text-[10px] text-primary font-black uppercase mt-1">HI, {profile?.fullName?.split(' ')[0]}</p></div>
+          <div className="text-left leading-none"><h1 className="text-base font-black text-gray-900 tracking-tighter uppercase">{appData.settings.appName}</h1><p className="text-[10px] text-primary font-black uppercase mt-1">HI, {profile?.fullName?.split(' ')[0]}</p></div>
         </div>
         <div className="flex gap-1">
-          <button onClick={() => setView('orders')} className="w-10 h-10 flex items-center justify-center text-gray-400 active:scale-90"><i className="fas fa-history text-lg"></i></button>
           <button onClick={() => setView('cart')} className="relative w-10 h-10 flex items-center justify-center text-gray-700 active:scale-90">{cart.length > 0 && <span className="absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white z-10">{cart.length}</span>}<i className="fas fa-shopping-basket text-xl"></i></button>
         </div>
       </header>
       <main className="pt-20 pb-40 px-4 fade-in">
         <nav className="flex gap-2 mb-8 overflow-x-auto no-scrollbar py-2">
           {appData.categories.map((cat: string) => (
-            <button key={cat} onClick={() => setCategory(cat)} className={`px-6 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all flex-shrink-0 shadow-sm ${category === cat ? 'bg-primary text-white shadow-orange-100' : 'bg-white text-orange-900 border border-orange-50'}`}>{cat}</button>
+            <button key={cat} onClick={() => setCategory(cat)} className={`px-6 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all flex-shrink-0 shadow-sm ${category === cat ? 'bg-primary text-white' : 'bg-white text-orange-900 border border-orange-50'}`}>{cat}</button>
           ))}
         </nav>
         <div className="grid grid-cols-2 gap-4">
@@ -424,12 +362,12 @@ const App = () => {
                   <img src={p.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e: any) => e.target.src='https://via.placeholder.com/300?text=Sweets'} />
                   <div className="absolute bottom-3 right-3">
                     {qty === 0 ? (
-                      <button onClick={() => updateCart(p, 1)} className="px-6 py-2 bg-white text-primary font-black text-[11px] rounded-xl border border-orange-100 shadow-xl uppercase active:scale-95 transition-all tracking-widest">ADD</button>
+                      <button onClick={() => updateCart(p, 1)} className="px-6 py-2 bg-white text-primary font-black text-[11px] rounded-xl border border-orange-100 shadow-xl uppercase tracking-widest">ADD</button>
                     ) : (
                       <div className="flex items-center bg-white rounded-xl border border-orange-100 shadow-xl overflow-hidden">
-                        <button onClick={() => updateCart(p, -1)} className="px-3 py-2 text-primary active:bg-orange-50 transition-colors"><i className="fas fa-minus text-[9px]"></i></button>
+                        <button onClick={() => updateCart(p, -1)} className="px-3 py-2 text-primary"><i className="fas fa-minus text-[9px]"></i></button>
                         <span className="px-2 text-xs font-black text-orange-900">{qty}</span>
-                        <button onClick={() => updateCart(p, 1)} className="px-3 py-2 text-primary active:bg-orange-50 transition-colors"><i className="fas fa-plus text-[9px]"></i></button>
+                        <button onClick={() => updateCart(p, 1)} className="px-3 py-2 text-primary"><i className="fas fa-plus text-[9px]"></i></button>
                       </div>
                     )}
                   </div>
@@ -446,9 +384,9 @@ const App = () => {
       </main>
       {cart.length > 0 && (
         <div className="fixed bottom-6 left-4 right-4 max-w-md mx-auto animate-slideUp">
-          <button onClick={() => setView('cart')} className="w-full bg-primary text-white font-black py-5 rounded-[24px] shadow-xl flex justify-between px-8 items-center active:translate-y-0.5 transition-all">
-            <span className="text-xs uppercase tracking-widest">{cart.length} Items</span>
-            <span className="text-sm font-black uppercase tracking-widest">Cart • ₹{totalWithFees} <i className="fas fa-arrow-right ml-2 text-xs"></i></span>
+          <button onClick={() => setView('cart')} className="w-full bg-primary text-white font-black py-5 rounded-[24px] shadow-xl flex justify-between px-8 items-center active:translate-y-0.5 transition-all uppercase tracking-widest text-xs">
+            <span>{cart.length} Items</span>
+            <span>Cart • ₹{totalWithFees} <i className="fas fa-arrow-right ml-2"></i></span>
           </button>
         </div>
       )}
@@ -461,59 +399,49 @@ const App = () => {
       <div className="space-y-4 mb-8">
         {cart.map(item => (
           <div key={item.id} className="flex gap-5 p-5 bg-orange-50/20 rounded-[32px] border border-orange-100/30">
-            <img src={item.image} className="w-20 h-20 object-cover rounded-2xl shadow-sm" onError={(e:any)=>e.target.src='https://via.placeholder.com/150'} />
+            <img src={item.image} className="w-20 h-20 object-cover rounded-2xl" onError={(e:any)=>e.target.src='https://via.placeholder.com/150'} />
             <div className="flex-1">
               <h4 className="font-black text-gray-900 text-sm mb-1 leading-tight">{item.name}</h4>
               <p className="text-primary font-black text-base tracking-tighter">₹{item.price * item.quantity}</p>
               <div className="flex items-center gap-4 mt-3">
-                <button onClick={() => updateCart(item, -1)} className="w-8 h-8 bg-white rounded-xl border border-orange-100 flex items-center justify-center text-xs shadow-sm"><i className="fas fa-minus text-[8px]"></i></button>
+                <button onClick={() => updateCart(item, -1)} className="w-8 h-8 bg-white rounded-xl border border-orange-100 flex items-center justify-center text-[8px]"><i className="fas fa-minus"></i></button>
                 <span className="font-black text-gray-900">{item.quantity}</span>
-                <button onClick={() => updateCart(item, 1)} className="w-8 h-8 bg-white rounded-xl border border-orange-100 flex items-center justify-center text-xs shadow-sm"><i className="fas fa-plus text-[8px]"></i></button>
+                <button onClick={() => updateCart(item, 1)} className="w-8 h-8 bg-white rounded-xl border border-orange-100 flex items-center justify-center text-[8px]"><i className="fas fa-plus"></i></button>
               </div>
             </div>
-            <button onClick={() => setCart(cart.filter(i => i.id !== item.id))} className="text-gray-300 p-2"><i className="fas fa-times"></i></button>
           </div>
         ))}
       </div>
-      <div className="bg-gray-50 p-8 rounded-[40px] space-y-3 mb-12 border border-orange-50 shadow-inner">
+      <div className="bg-gray-50 p-8 rounded-[40px] space-y-3 mb-12 border border-orange-50">
         <div className="flex justify-between text-xs font-bold text-gray-500 uppercase"><span>Subtotal</span><span className="text-gray-900">₹{cartTotal}</span></div>
-        <div className="flex justify-between text-xs font-bold text-gray-500 uppercase"><span>Platform Fee</span><span className="text-gray-900">₹{appData.settings.platformFee}</span></div>
-        <div className="flex justify-between text-xs font-bold text-gray-500 uppercase"><span>Delivery Charge</span><span className="text-gray-900">{deliveryFee === 0 ? 'FREE' : '₹'+deliveryFee}</span></div>
-        <div className="border-t border-gray-200 pt-4 mt-4 flex justify-between font-black text-2xl tracking-tighter text-gray-900"><span>Grand Total</span><span className="text-primary">₹{totalWithFees}</span></div>
+        <div className="flex justify-between text-xs font-bold text-gray-500 uppercase"><span>Grand Total</span><span className="text-primary text-xl font-black">₹{totalWithFees}</span></div>
       </div>
-      <button onClick={() => setView('checkout')} className="w-full py-5 bg-primary text-white rounded-[24px] font-black shadow-xl uppercase tracking-widest text-sm active:scale-95 transition-all">Proceed to Checkout</button>
+      <button onClick={() => setView('checkout')} className="w-full py-5 bg-primary text-white rounded-[24px] font-black shadow-xl uppercase tracking-widest text-sm">Proceed</button>
     </div>
   );
 
   if (view === 'checkout') return (
     <div className="min-h-screen bg-white p-4 pt-16 text-left fade-in">
-      <div className="flex gap-4 mb-8"><button onClick={() => setView('cart')} className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button><h2 className="text-2xl font-black uppercase tracking-tighter text-gray-900 leading-none">Order Details</h2></div>
+      <div className="flex gap-4 mb-8"><button onClick={() => setView('cart')} className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform"><i className="fas fa-arrow-left"></i></button><h2 className="text-2xl font-black uppercase tracking-tighter text-gray-900 leading-none">Confirmation</h2></div>
       <div className="space-y-10 pb-40">
         <div>
-          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-4 ml-2 text-left">Delivery Method</label>
+          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-4 ml-2">Delivery Option</label>
           <div className="grid grid-cols-2 gap-4">
-            <button onClick={() => setDeliveryMethod('home')} className={`p-6 rounded-[28px] border-2 transition-all flex flex-col items-center gap-3 ${deliveryMethod === 'home' ? 'border-primary bg-orange-50 text-orange-900 shadow-lg shadow-orange-100' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-truck text-2xl"></i><span className="font-black text-[10px] uppercase tracking-widest">Doorstep</span></button>
-            <button onClick={() => setDeliveryMethod('pickup')} className={`p-6 rounded-[28px] border-2 transition-all flex flex-col items-center gap-3 ${deliveryMethod === 'pickup' ? 'border-primary bg-orange-50 text-orange-900 shadow-lg shadow-orange-100' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-store text-2xl"></i><span className="font-black text-[10px] uppercase tracking-widest">Pickup</span></button>
+            <button onClick={() => setDeliveryMethod('home')} className={`p-6 rounded-[28px] border-2 flex flex-col items-center gap-3 ${deliveryMethod === 'home' ? 'border-primary bg-orange-50 text-orange-900' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-truck text-2xl"></i><span className="font-black text-[10px] uppercase tracking-widest">Home</span></button>
+            <button onClick={() => setDeliveryMethod('pickup')} className={`p-6 rounded-[28px] border-2 flex flex-col items-center gap-3 ${deliveryMethod === 'pickup' ? 'border-primary bg-orange-50 text-orange-900' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-store text-2xl"></i><span className="font-black text-[10px] uppercase tracking-widest">Store</span></button>
           </div>
         </div>
         <div>
-          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-4 ml-2 text-left">Payment Option</label>
+          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-4 ml-2">Payment</label>
           <div className="space-y-4">
-            <button onClick={() => setPaymentMethod('cod')} className={`w-full p-6 rounded-[28px] border-2 transition-all flex items-center gap-5 ${paymentMethod === 'cod' ? 'border-primary bg-orange-50 text-orange-900 shadow-lg shadow-orange-100' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-money-bill-wave text-2xl"></i><span className="font-black text-xs uppercase tracking-widest">Cash on Delivery</span></button>
-            <button onClick={() => setPaymentMethod('upi')} className={`w-full p-6 rounded-[28px] border-2 transition-all flex items-center gap-5 ${paymentMethod === 'upi' ? 'border-primary bg-orange-50 text-orange-900 shadow-lg shadow-orange-100' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-qrcode text-2xl"></i><span className="font-black text-xs uppercase tracking-widest">UPI QR Pay</span></button>
+            <button onClick={() => setPaymentMethod('cod')} className={`w-full p-6 rounded-[28px] border-2 flex items-center gap-5 ${paymentMethod === 'cod' ? 'border-primary bg-orange-50 text-orange-900' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-money-bill-wave text-2xl"></i><span className="font-black text-xs uppercase tracking-widest">Cash on Delivery</span></button>
+            <button onClick={() => setPaymentMethod('upi')} className={`w-full p-6 rounded-[28px] border-2 flex items-center gap-5 ${paymentMethod === 'upi' ? 'border-primary bg-orange-50 text-orange-900' : 'border-gray-50 bg-gray-50 text-gray-400'}`}><i className="fas fa-qrcode text-2xl"></i><span className="font-black text-xs uppercase tracking-widest">UPI QR</span></button>
           </div>
         </div>
         {paymentMethod === 'upi' && (
-          <div className="bg-white p-8 rounded-[40px] border-2 border-dashed border-orange-200 text-center shadow-soft">
-             <p className="text-[11px] font-black text-orange-900 mb-4 uppercase tracking-widest">PAYABLE: ₹{totalWithFees}</p>
-             <div className="bg-red-50 p-4 rounded-2xl mb-6 border border-red-100 animate-pulse">
-                <p className="text-[10px] font-black text-red-600 uppercase leading-tight">
-                  <i className="fas fa-exclamation-triangle mr-2"></i>
-                  Send screenshot on WhatsApp to confirm order, otherwise order will be not accepted.
-                </p>
-             </div>
-             <img src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=${appData.settings.upiId}%26pn=${encodeURIComponent(appData.settings.appName)}%26am=${totalWithFees}%26cu=INR`} className="mx-auto w-48 h-48 rounded-2xl border-4 border-white shadow-2xl mb-6" />
-             <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">Scan with GPay / PhonePe / Paytm</p>
+          <div className="bg-white p-8 rounded-[40px] border-2 border-dashed border-orange-200 text-center">
+             <img src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=${appData.settings.upiId}%26pn=${encodeURIComponent(appData.settings.appName)}%26am=${totalWithFees}%26cu=INR`} className="mx-auto w-48 h-48 rounded-2xl shadow-2xl mb-6" />
+             <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">Scan to pay ₹{totalWithFees}</p>
           </div>
         )}
       </div>
