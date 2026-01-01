@@ -71,6 +71,15 @@
       "category": "Drinks",
       "image": "coke.jpg",
       "description": ""
+    },
+    {
+      "id": "1767290538991",
+      "name": "Yellow Peda",
+      "price": 100,
+      "weight": "250g",
+      "category": "Sweets",
+      "image": "yellow_peda.jpg",
+      "description": ""
     }
   ],
   "categories": [
